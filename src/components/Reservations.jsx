@@ -1,37 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import ContactTestModal from "../layouts/ContactTestModal";
+import useReservations from "@/src/hooks/main/Reservations";
 
 export default function Reservations() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    checkIn: "",
-    checkOut: "",
-    guests: "2",
-    room: "",
-    message: "",
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setModalOpen(true);
-  };
-
-  const inputClass =
-    "mt-2 w-full border border-[#d8cbb8] bg-[#faf8f3] px-4 py-3.5 text-sm text-[#30271e] outline-none transition-colors placeholder:text-[#a39788] focus:border-[#a17d43]";
-
-  const labelClass =
-    "text-xs uppercase tracking-[0.12em] text-[#74695d]";
+  const {
+    content,
+    routes,
+    form,
+    handleChange,
+    handleSubmit,
+    inputClass,
+    labelClass,
+    modalOpen,
+    openModal,
+    closeModal,
+  } = useReservations();
 
   return (
     <>
@@ -44,18 +29,16 @@ export default function Reservations() {
               <div className="mb-6 flex items-center gap-3 text-[#a17d43]">
                 <span className="h-px w-10 bg-current" />
                 <span className="text-[10px] tracking-[0.28em] sm:text-xs">
-                  RESERVAS · ALTOS HOTEL & ESTANCIA
+                  {content.hero.eyebrow}
                 </span>
               </div>
 
               <h1 className="max-w-2xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-                Tu descanso empieza con una buena elección.
+                {content.hero.title}
               </h1>
 
               <p className="mt-6 max-w-xl text-sm leading-7 text-[#716052] sm:text-base sm:leading-8">
-                Contanos cómo imaginás tu estadía. Estamos para ayudarte a
-                encontrar la habitación ideal y preparar una experiencia a tu
-                medida.
+                {content.hero.description}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -63,34 +46,37 @@ export default function Reservations() {
                   href="#formulario-reserva"
                   className="inline-flex items-center justify-center bg-[#80603a] px-7 py-4 text-xs tracking-[0.16em] text-[#fffaf1] transition-colors hover:bg-[#6e502f]"
                 >
-                  CONSULTAR DISPONIBILIDAD
+                  {content.hero.availabilityButton}
                 </a>
 
                 <Link
-                  href="/rooms"
+                  href={routes.rooms}
                   className="inline-flex items-center justify-center border border-[#a17d43]/50 px-7 py-4 text-xs tracking-[0.16em] text-[#76572f] transition-colors hover:bg-[#dcd0bb]"
                 >
-                  VER HABITACIONES
+                  {content.hero.roomsButton}
                 </Link>
               </div>
             </div>
 
             <div className="relative">
               <div className="absolute -bottom-4 -left-4 right-4 top-4 border border-[#a17d43]/40" />
+
               <div className="relative aspect-[4/5] overflow-hidden bg-[#d9c9b1] sm:aspect-[5/4] lg:aspect-[4/5]">
                 <img
-                  src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=85"
-                  alt="Habitación cálida y elegante de ALTOS Hotel"
+                  src={content.hero.image.src}
+                  alt={content.hero.image.alt}
                   className="h-full w-full object-cover"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-[#21170f]/70 via-transparent to-transparent" />
 
                 <div className="absolute bottom-0 left-0 p-6 sm:p-8">
                   <p className="text-[10px] tracking-[0.25em] text-[#e7c990]">
-                    UN LUGAR PARA DESACELERAR
+                    {content.hero.image.eyebrow}
                   </p>
+
                   <p className="mt-3 max-w-sm font-serif text-2xl text-[#faf5eb] sm:text-3xl">
-                    Cada detalle, pensado para vos.
+                    {content.hero.image.caption}
                   </p>
                 </div>
               </div>
@@ -104,50 +90,55 @@ export default function Reservations() {
               <div className="mb-5 flex items-center gap-3 text-[#a17d43]">
                 <span className="h-px w-8 bg-current" />
                 <span className="text-[10px] tracking-[0.25em]">
-                  TU ESTADÍA
+                  {content.stay.eyebrow}
                 </span>
               </div>
 
               <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
-                Planifiquemos juntos tu visita.
+                {content.stay.title}
               </h2>
 
               <p className="mt-5 text-sm leading-7 text-[#74695d]">
-                Completá tus datos y las fechas que tenés en mente. Nuestro
-                equipo podrá orientarte sobre las opciones disponibles.
+                {content.stay.description}
               </p>
 
               <div className="mt-8 border-l-2 border-[#a17d43]/60 pl-5">
-                <p className="font-serif text-lg">¿Tenés alguna duda?</p>
-                <p className="mt-2 text-sm leading-7 text-[#74695d]">
-                  Si preferís conversar antes de reservar, podemos ayudarte
-                  con los detalles de tu estadía.
+                <p className="font-serif text-lg">
+                  {content.stay.question}
                 </p>
+
+                <p className="mt-2 text-sm leading-7 text-[#74695d]">
+                  {content.stay.questionDescription}
+                </p>
+
                 <button
                   type="button"
-                  onClick={() => setModalOpen(true)}
+                  onClick={openModal}
                   className="mt-4 text-xs tracking-[0.12em] text-[#8a693a] underline decoration-[#a17d43]/50 underline-offset-4 transition-colors hover:text-[#5f4528]"
                 >
-                  HACER UNA CONSULTA
+                  {content.stay.contactButton}
                 </button>
               </div>
 
               <div className="mt-10 grid grid-cols-2 gap-4">
-                <div className="border border-[#e5dac9] bg-[#f2ece1] p-4">
-                  <span className="text-xl text-[#a17d43]">✦</span>
-                  <p className="mt-3 font-serif text-base">Descanso</p>
-                  <p className="mt-1 text-xs leading-5 text-[#74695d]">
-                    Espacios para bajar el ritmo.
-                  </p>
-                </div>
+                {content.stay.highlights.map((item) => (
+                  <div
+                    key={item.title}
+                    className="border border-[#e5dac9] bg-[#f2ece1] p-4"
+                  >
+                    <span className="text-xl text-[#a17d43]">
+                      {item.icon}
+                    </span>
 
-                <div className="border border-[#e5dac9] bg-[#f2ece1] p-4">
-                  <span className="text-xl text-[#a17d43]">✧</span>
-                  <p className="mt-3 font-serif text-base">Bienestar</p>
-                  <p className="mt-1 text-xs leading-5 text-[#74695d]">
-                    Una experiencia a tu medida.
-                  </p>
-                </div>
+                    <p className="mt-3 font-serif text-base">
+                      {item.title}
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-[#74695d]">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -157,77 +148,79 @@ export default function Reservations() {
             >
               <div className="mb-8 border-b border-[#d8cbb8] pb-6">
                 <p className="text-[10px] tracking-[0.25em] text-[#8a693a]">
-                  EMPECEMOS POR LO ESENCIAL
+                  {content.form.eyebrow}
                 </p>
+
                 <h2 className="mt-3 font-serif text-2xl sm:text-3xl">
-                  Consulta de reserva
+                  {content.form.title}
                 </h2>
+
                 <p className="mt-3 text-sm leading-6 text-[#74695d]">
-                  Los datos nos ayudan a conocer mejor lo que necesitás.
+                  {content.form.description}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className={labelClass}>
-                    Nombre y apellido
+                    {content.form.fields.name.label}
                     <input
                       required
                       name="name"
                       value={form.name}
                       onChange={handleChange}
-                      placeholder="Tu nombre completo"
+                      placeholder={content.form.fields.name.placeholder}
                       autoComplete="name"
                       className={inputClass}
                     />
                   </label>
 
                   <label className={labelClass}>
-                    Correo electrónico
+                    {content.form.fields.email.label}
                     <input
                       required
                       type="email"
                       name="email"
                       value={form.email}
                       onChange={handleChange}
-                      placeholder="tu@email.com"
+                      placeholder={content.form.fields.email.placeholder}
                       autoComplete="email"
                       className={inputClass}
                     />
                   </label>
 
                   <label className={labelClass}>
-                    Teléfono
+                    {content.form.fields.phone.label}
                     <input
                       required
                       type="tel"
                       name="phone"
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+54 9 ..."
+                      placeholder={content.form.fields.phone.placeholder}
                       autoComplete="tel"
                       className={inputClass}
                     />
                   </label>
 
                   <label className={labelClass}>
-                    Cantidad de huéspedes
+                    {content.form.fields.guests.label}
                     <select
                       name="guests"
                       value={form.guests}
                       onChange={handleChange}
                       className={inputClass}
                     >
-                      <option value="1">1 huésped</option>
-                      <option value="2">2 huéspedes</option>
-                      <option value="3">3 huéspedes</option>
-                      <option value="4">4 huéspedes</option>
-                      <option value="5+">5 o más huéspedes</option>
+                      {content.form.fields.guests.options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
                     </select>
                   </label>
 
                   <label className={labelClass}>
-                    Fecha de ingreso
+                    {content.form.fields.checkIn.label}
                     <input
                       required
                       type="date"
@@ -239,7 +232,7 @@ export default function Reservations() {
                   </label>
 
                   <label className={labelClass}>
-                    Fecha de salida
+                    {content.form.fields.checkOut.label}
                     <input
                       required
                       type="date"
@@ -253,48 +246,43 @@ export default function Reservations() {
                 </div>
 
                 <label className={labelClass}>
-                  Habitación de preferencia
+                  {content.form.fields.room.label}
                   <select
                     name="room"
                     value={form.room}
                     onChange={handleChange}
                     className={inputClass}
                   >
-                    <option value="">Quiero recibir recomendaciones</option>
-                    <option value="Habitación Clásica">
-                      Habitación Clásica
-                    </option>
-                    <option value="Habitación Superior">
-                      Habitación Superior
-                    </option>
-                    <option value="Suite Especial">Suite Especial</option>
+                    {content.form.fields.room.options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </select>
                 </label>
 
                 <label className={labelClass}>
-                  Comentarios adicionales
+                  {content.form.fields.message.label}
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     rows={4}
-                    placeholder="Contanos si tenés algún pedido especial..."
+                    placeholder={content.form.fields.message.placeholder}
                     className={`${inputClass} resize-y`}
                   />
                 </label>
 
                 <div className="border-t border-[#d8cbb8] pt-6">
                   <p className="mb-5 text-xs leading-6 text-[#817466]">
-                    Esta solicitud es una consulta inicial y no confirma una
-                    reserva. Nos pondremos en contacto para conversar sobre
-                    disponibilidad y detalles.
+                    {content.form.notice}
                   </p>
 
                   <button
                     type="submit"
                     className="flex w-full items-center justify-center gap-3 bg-[#80603a] px-7 py-4 text-xs tracking-[0.16em] text-[#fffaf1] transition-colors hover:bg-[#6e502f]"
                   >
-                    ENVIAR CONSULTA
+                    {content.form.submit}
                     <span aria-hidden="true">→</span>
                   </button>
                 </div>
@@ -305,10 +293,7 @@ export default function Reservations() {
       </main>
 
       {modalOpen && (
-        <ContactTestModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-        />
+        <ContactTestModal isOpen={modalOpen} onClose={closeModal} />
       )}
     </>
   );

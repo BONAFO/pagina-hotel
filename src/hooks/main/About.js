@@ -1,10 +1,22 @@
+"use client";
+
+import AboutTranslations from "@/src/translations/About";
 import useRoutesHook from "../Routes";
 
 export default function useAboutHook() {
-  const { homePath, menuPath } = useRoutesHook();
+  const content = AboutTranslations;
+
+  const { essence, gastronomy, values } = content;
+  const { menuPath } = useRoutesHook();
+  const routes = {
+    restaurant: menuPath,
+  };
 
   return {
-    homePath,
-    menuPath,
+    content,
+    essence,
+    gastronomy,
+    values,
+    routes,
   };
 }

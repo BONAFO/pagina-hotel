@@ -1,47 +1,10 @@
-"use client";
-
+"use client"
 import Link from "next/link";
-
-const rooms = [
-  {
-    id: 1,
-    name: "Habitación Clásica",
-    category: "CONFORT & DESCANSO",
-    description:
-      "Un espacio cálido y acogedor, ideal para disfrutar de una escapada y descansar sin preocupaciones.",
-    image:
-      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=85",
-    guests: "2 huéspedes",
-    bed: "Cama matrimonial",
-    size: "24 m²",
-  },
-  {
-    id: 2,
-    name: "Habitación Superior",
-    category: "ESPACIO & BIENESTAR",
-    description:
-      "Más amplitud, detalles cuidados y un ambiente sereno para convertir tu estadía en una experiencia especial.",
-    image:
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=85",
-    guests: "2 huéspedes",
-    bed: "Cama queen",
-    size: "32 m²",
-  },
-  {
-    id: 3,
-    name: "Suite Especial",
-    category: "UNA ESTADÍA ÚNICA",
-    description:
-      "Un refugio exclusivo con ambientes amplios, diseño elegante y espacio para disfrutar cada momento.",
-    image:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85",
-    guests: "2–3 huéspedes",
-    bed: "Cama king",
-    size: "42 m²",
-  },
-];
+import useRooms from "@/src/hooks/main/Rooms";
 
 export default function Rooms() {
+  const { content, rooms, getReservationRoute } = useRooms();
+
   return (
     <main className="min-h-screen bg-[#faf8f3] text-[#30271e]">
       {/* Encabezado */}
@@ -49,19 +12,20 @@ export default function Rooms() {
         <div className="mb-6 flex items-center justify-center gap-3">
           <span className="h-px w-10 bg-[#b4945c]" />
           <p className="text-[10px] font-medium tracking-[0.3em] text-[#987747] sm:text-xs">
-            DESCANSO A TU MANERA
+            {content.header.eyebrow}
           </p>
           <span className="h-px w-10 bg-[#b4945c]" />
         </div>
 
         <h1 className="mx-auto max-w-3xl font-serif text-4xl leading-tight tracking-tight sm:text-5xl md:text-6xl">
-          Un lugar para sentirte
-          <span className="block italic text-[#a17d43]">como en casa.</span>
+          {content.header.title}
+          <span className="block italic text-[#a17d43]">
+            {content.header.titleAccent}
+          </span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-[#776c5d] sm:text-base sm:leading-8">
-          Cada habitación está pensada para ofrecerte tranquilidad, comodidad y
-          pequeños detalles que hacen especial cada estadía.
+          {content.header.description}
         </p>
       </section>
 
@@ -69,8 +33,8 @@ export default function Rooms() {
       <section className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="relative h-[300px] overflow-hidden sm:h-[420px] lg:h-[500px]">
           <img
-            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=2000&q=85"
-            alt="Habitación elegante y acogedora del hotel"
+            src={content.hero.image}
+            alt={content.hero.alt}
             className="h-full w-full object-cover"
           />
 
@@ -78,10 +42,11 @@ export default function Rooms() {
 
           <div className="absolute bottom-0 left-0 max-w-xl p-6 sm:p-10 lg:p-12">
             <p className="mb-3 text-[10px] tracking-[0.25em] text-[#e3c58f] sm:text-xs">
-              TU ESPACIO, TU MOMENTO
+              {content.hero.eyebrow}
             </p>
+
             <h2 className="font-serif text-3xl text-white sm:text-4xl">
-              El placer de bajar el ritmo.
+              {content.hero.title}
             </h2>
           </div>
         </div>
@@ -92,16 +57,16 @@ export default function Rooms() {
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 text-[10px] tracking-[0.25em] text-[#987747]">
-              ENCONTRÁ TU LUGAR
+              {content.listing.eyebrow}
             </p>
+
             <h2 className="font-serif text-3xl sm:text-4xl">
-              Nuestras habitaciones
+              {content.listing.title}
             </h2>
           </div>
 
           <p className="max-w-sm text-sm leading-6 text-[#776c5d]">
-            Diferentes espacios, una misma idea: que disfrutes cada instante de
-            tu visita.
+            {content.listing.description}
           </p>
         </div>
 
@@ -139,6 +104,7 @@ export default function Rooms() {
                       stroke="currentColor"
                       strokeWidth="1.4"
                       className="h-4 w-4 text-[#a17d43]"
+                      aria-hidden="true"
                     >
                       <circle cx="12" cy="7" r="4" />
                       <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
@@ -153,6 +119,7 @@ export default function Rooms() {
                       stroke="currentColor"
                       strokeWidth="1.4"
                       className="h-4 w-4 text-[#a17d43]"
+                      aria-hidden="true"
                     >
                       <path d="M3 12V5h18v14H3zM3 16h18M7 12v4M17 12v4" />
                     </svg>
@@ -166,6 +133,7 @@ export default function Rooms() {
                       stroke="currentColor"
                       strokeWidth="1.4"
                       className="h-4 w-4 text-[#a17d43]"
+                      aria-hidden="true"
                     >
                       <rect x="4" y="4" width="16" height="16" rx="1" />
                       <path d="M4 10h6V4M14 20v-6h6" />
@@ -175,10 +143,11 @@ export default function Rooms() {
                 </div>
 
                 <Link
-                  href={`/reservations?room=${room.id}`}
+                  href={getReservationRoute(room.id)}
                   className="flex min-h-12 items-center justify-between border border-[#b4945c] px-4 text-xs tracking-[0.1em] text-[#806132] transition hover:bg-[#a17d43] hover:text-white"
                 >
-                  CONSULTAR DISPONIBILIDAD
+                  {content.availabilityButton}
+
                   <span aria-hidden="true" className="text-lg">
                     ↗
                   </span>
@@ -188,8 +157,6 @@ export default function Rooms() {
           ))}
         </div>
       </section>
-
-
     </main>
   );
 }

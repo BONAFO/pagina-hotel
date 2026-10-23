@@ -1,157 +1,150 @@
-"use client";
+"use client"
 
 import Link from "next/link";
+import useAboutHook from "@/src/hooks/main/About";
 
 export default function About() {
+  const {
+    essence,
+    gastronomy,
+    values,
+    routes,
+  } = useAboutHook();
+
   return (
     <main className="overflow-hidden bg-[#faf8f3] text-[#30271e]">
-      
-
-      <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 sm:px-10 sm:py-24 lg:grid-cols-2 lg:gap-20 lg:px-12 lg:py-28">
-        <div>
-          <span className="text-xs tracking-[0.25em] text-[#a17d43]">
-            NUESTRA ESENCIA
-          </span>
-
-          <h2 className="mt-5 font-serif text-3xl leading-tight sm:text-5xl">
-            Más que un lugar para quedarse, una experiencia para disfrutar.
-          </h2>
-
-          <div className="mt-7 space-y-5 text-sm leading-7 text-[#74695d] sm:text-base sm:leading-8">
-            <p>
-              En ALTOS pensamos la hospitalidad como algo sencillo y
-              significativo: recibirte bien, ofrecerte un espacio confortable
-              y hacer que cada momento de tu visita valga la pena.
+      {/* ESENCIA */}
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-28">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[#a17d43]">
+              {essence.eyebrow}
             </p>
 
-            <p>
-              Queremos que encuentres un ambiente donde descansar, compartir
-              una buena comida y disfrutar de tu tiempo sin apuros.
-            </p>
+            <h1 className="font-serif text-3xl leading-tight tracking-tight text-[#30271e] sm:text-4xl lg:text-5xl">
+              {essence.title}
+            </h1>
 
-            <p>
-              Por eso reunimos en un mismo lugar la comodidad del hotel y una
-              propuesta gastronómica propia, para que puedas vivir una
-              experiencia completa desde que llegás.
-            </p>
+            <div className="mt-7 space-y-4">
+              {essence.paragraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-sm leading-7 text-[#71665a] sm:text-base sm:leading-8"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <div className="mt-8 border-l-2 border-[#c7a66c] py-2 pl-5 sm:mt-10">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[#a17d43]">
+                {essence.philosophy.eyebrow}
+              </p>
+
+              <p className="font-serif text-xl leading-relaxed text-[#30271e] sm:text-2xl">
+                {essence.philosophy.text}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="relative">
-          <div className="absolute -bottom-5 -left-5 hidden h-2/3 w-2/3 border border-[#c8ad7c]/60 sm:block" />
-
-          <img
-            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1400&q=90"
-            alt="Habitación acogedora del hotel"
-            className="relative h-[400px] w-full object-cover sm:h-[540px]"
-          />
-
-          <div className="absolute bottom-0 left-0 max-w-xs bg-[#21170f]/90 p-6 text-[#faf5eb] sm:p-8">
-            <span className="text-xs tracking-[0.22em] text-[#d3b77f]">
-              NUESTRA FILOSOFÍA
-            </span>
-            <p className="mt-3 font-serif text-2xl leading-snug">
-              Que te sientas a gusto, desde el primer momento.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#eee7db]">
-        <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
-          <div className="relative min-h-[350px] sm:min-h-[470px]">
+          <div className="relative overflow-hidden rounded-2xl shadow-[0_20px_55px_rgba(48,39,30,0.12)]">
             <img
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=90"
-              alt="Mesa preparada en el restaurante de ALTOS"
-              className="absolute inset-0 h-full w-full object-cover"
+              src={essence.image.src}
+              alt={essence.image.alt}
+              loading="lazy"
+              className="h-[320px] w-full object-cover sm:h-[440px] lg:h-[540px]"
             />
           </div>
+        </div>
+      </section>
 
-          <div className="flex flex-col justify-center px-6 py-16 sm:px-12 sm:py-20 lg:px-16 lg:py-24">
-            <span className="text-xs tracking-[0.25em] text-[#a17d43]">
-              NUESTRA PROPUESTA GASTRONÓMICA
-            </span>
+      {/* GASTRONOMÍA */}
+      <section className="bg-[#eee7db]">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-28">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="overflow-hidden rounded-2xl">
+              <img
+                src={gastronomy.image.src}
+                alt={gastronomy.image.alt}
+                loading="lazy"
+                className="h-[300px] w-full object-cover sm:h-[420px] lg:h-[500px]"
+              />
+            </div>
 
-            <h2 className="mt-5 font-serif text-3xl leading-tight sm:text-5xl">
-              El hotel y el restaurante, unidos en una misma experiencia.
-            </h2>
+            <div className="flex flex-col items-start justify-center">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[#a17d43]">
+                {gastronomy.eyebrow}
+              </p>
 
-            <p className="mt-6 text-sm leading-7 text-[#74695d] sm:text-base sm:leading-8">
-              Dentro de ALTOS también podés descubrir nuestro restaurante, un
-              espacio pensado para disfrutar de buenos sabores, compartir la
-              mesa y completar tu estadía con una experiencia gastronómica.
-            </p>
+              <h2 className="font-serif text-3xl leading-tight tracking-tight text-[#30271e] sm:text-4xl lg:text-5xl">
+                {gastronomy.title}
+              </h2>
 
-            <p className="mt-4 text-sm leading-7 text-[#74695d] sm:text-base sm:leading-8">
-              Tanto si te alojás con nosotros como si venís especialmente a
-              comer, queremos que encuentres un ambiente cálido y una carta
-              para disfrutar a tu manera.
-            </p>
+              <div className="mt-7 space-y-4">
+                {gastronomy.paragraphs.map((paragraph, index) => (
+                  <p
+                    key={index}
+                    className="text-sm leading-7 text-[#71665a] sm:text-base sm:leading-8"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
 
-            <Link
-              href="/menu"
-              className="mt-8 inline-flex w-fit items-center gap-4 border-b border-[#a17d43] pb-2 text-xs tracking-[0.16em] text-[#8c6936] transition-colors hover:text-[#30271e]"
-            >
-              DESCUBRIR LA CARTA
-              <span aria-hidden="true">→</span>
-            </Link>
+              <Link
+                href={routes.restaurant}
+                className="group mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-[#2b1d13] px-7 py-4 text-xs font-semibold tracking-[0.16em] text-[#faf5eb] transition duration-300 hover:bg-[#493321]"
+              >
+                {gastronomy.buttonText}
+
+                <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-10 sm:py-24 lg:px-12 lg:py-28">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs tracking-[0.25em] text-[#a17d43]">
-            LO QUE NOS DEFINE
-          </span>
+      {/* VALORES */}
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-[#a17d43]">
+            {values.eyebrow}
+          </p>
 
-          <h2 className="mt-5 font-serif text-3xl leading-tight sm:text-5xl">
-            Los detalles hacen la diferencia.
+          <h2 className="font-serif text-3xl leading-tight tracking-tight text-[#30271e] sm:text-4xl lg:text-5xl">
+            {values.title}
           </h2>
 
-          <p className="mt-6 text-sm leading-7 text-[#74695d] sm:text-base sm:leading-8">
-            Buscamos que cada espacio y cada momento transmitan la esencia de
-            ALTOS: calidez, tranquilidad y el placer de disfrutar.
+          <p className="mt-5 text-sm leading-7 text-[#71665a] sm:text-base sm:leading-8">
+            {values.description}
           </p>
         </div>
 
-        <div className="mt-14 grid gap-10 sm:grid-cols-3 sm:gap-8">
-          <article className="text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center border border-[#c8ad7c] font-serif text-2xl text-[#a17d43]">
-              I
-            </span>
-            <h3 className="mt-6 font-serif text-2xl">Calidez</h3>
-            <p className="mx-auto mt-3 max-w-xs text-sm leading-7 text-[#74695d]">
-              Una atención cercana y un ambiente pensado para que te sientas
-              bienvenido.
-            </p>
-          </article>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+          {values.items.map((item) => (
+            <article
+              key={item.number}
+              className="rounded-2xl border border-[#e5dac8] bg-[#faf8f3] p-7 transition duration-300 hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(48,39,30,0.07)] sm:p-8"
+            >
+              <p className="mb-6 text-2xl">{item.emoji}</p>
 
-          <article className="text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center border border-[#c8ad7c] font-serif text-2xl text-[#a17d43]">
-              II
-            </span>
-            <h3 className="mt-6 font-serif text-2xl">Tranquilidad</h3>
-            <p className="mx-auto mt-3 max-w-xs text-sm leading-7 text-[#74695d]">
-              Espacios confortables para descansar, desconectar y disfrutar sin
-              apuros.
-            </p>
-          </article>
+              <p className="text-xs font-semibold tracking-[0.2em] text-[#a17d43]">
+                {item.number}
+              </p>
 
-          <article className="text-center">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center border border-[#c8ad7c] font-serif text-2xl text-[#a17d43]">
-              III
-            </span>
-            <h3 className="mt-6 font-serif text-2xl">Disfrute</h3>
-            <p className="mx-auto mt-3 max-w-xs text-sm leading-7 text-[#74695d]">
-              La comodidad del hotel y el placer de compartir una buena mesa
-              en un mismo lugar.
-            </p>
-          </article>
+              <h3 className="mb-3 font-serif text-2xl text-[#30271e]">
+                {item.title}
+              </h3>
+
+              <p className="text-sm leading-7 text-[#71665a]">
+                {item.description}
+              </p>
+            </article>
+          ))}
         </div>
       </section>
-
-
     </main>
   );
 }

@@ -22,6 +22,21 @@ export const useNavigationHook = (path) => {
 
     case "about":
       return pages.find((page) => page.name === "about")?.path;
+
+    case "rooms":
+      return pages.find((page) => page.name === "rooms")?.path;
+
+    case "reservations":
+      return pages.find((page) => page.name === "reservations")?.path;
+
+    case "services":
+      return pages.find((page) => page.name === "services")?.path;
+
+    case "experiences":
+      return pages.find((page) => page.name === "experiences")?.path;
+      
+    case "resto-menu":
+      return pages.find((page) => page.name === "resto-menu")?.path;
   }
 };
 
@@ -48,8 +63,6 @@ export const useNavigate = () => {
   const useMenuNavigation = () => {
     router.push(useNavigationHook("menu"), "_blank", "noopener,noreferrer");
   };
-
-  
 
   return {
     toMenu: useMenuNavigation,

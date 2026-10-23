@@ -1,18 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import useNavbar from "@/src/hooks/main/Navbar";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const links = [
-    { label: "Inicio", href: "/" },
-    { label: "Habitaciones", href: "/rooms" },
-    { label: "Servicios", href: "/services" },
-    { label: "Experiencias", href: "/experiences" },
-    { label: "Contacto", href: "/contact" },
-  ];
+  const {
+    content,
+    links,
+    reservation,
+    isOpen,
+    toggleMenu,
+    closeMenu,
+    menuLabel,
+  } = useNavbar();
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#e9e0d3] bg-[#faf8f3]/95 text-[#29271f] backdrop-blur-md">
@@ -26,6 +26,7 @@ export default function Navbar() {
               stroke="currentColor"
               strokeWidth="1.3"
               className="h-6 w-6"
+              aria-hidden="true"
             >
               <path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-7h6v7M3 9h18" />
             </svg>
@@ -33,10 +34,10 @@ export default function Navbar() {
 
           <div>
             <span className="block font-serif text-xl tracking-[0.16em]">
-              ALTOS
+              {content.brand.name}
             </span>
             <span className="block text-[9px] tracking-[0.32em] text-[#8d806d]">
-              HOTEL & ESTANCIA
+              {content.brand.subtitle}
             </span>
           </div>
         </Link>
@@ -57,10 +58,10 @@ export default function Navbar() {
         {/* Reservation CTA */}
         <div className="hidden lg:block">
           <Link
-            href="/reservations"
+            href={reservation.href}
             className="inline-flex items-center gap-2 bg-[#a17d43] px-5 py-3 text-xs tracking-[0.12em] text-white transition hover:bg-[#806132]"
           >
-            RESERVAR ESTADÍA
+            {reservation.label}
             <span aria-hidden="true">↗</span>
           </Link>
         </div>
@@ -68,8 +69,8 @@ export default function Navbar() {
         {/* Mobile menu button */}
         <button
           type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          onClick={toggleMenu}
+          aria-label={menuLabel}
           aria-expanded={isOpen}
           className="flex h-11 w-11 items-center justify-center border border-[#e3d9c9] text-[#66543b] transition hover:bg-[#f0e9dd] lg:hidden"
         >
@@ -80,6 +81,7 @@ export default function Navbar() {
               stroke="currentColor"
               strokeWidth="1.5"
               className="h-6 w-6"
+              aria-hidden="true"
             >
               <path d="m6 6 12 12M18 6 6 18" />
             </svg>
@@ -90,6 +92,7 @@ export default function Navbar() {
               stroke="currentColor"
               strokeWidth="1.5"
               className="h-6 w-6"
+              aria-hidden="true"
             >
               <path d="M4 7h16M4 12h16M4 17h16" />
             </svg>
@@ -105,7 +108,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsOpen(false)}
+                onClick={closeMenu}
                 className={`py-4 text-sm text-[#625c51] transition hover:text-[#a17d43] ${
                   index !== links.length - 1
                     ? "border-b border-[#eee6da]"
@@ -118,11 +121,11 @@ export default function Navbar() {
           </nav>
 
           <Link
-            href="/reservations"
-            onClick={() => setIsOpen(false)}
+            href={reservation.href}
+            onClick={closeMenu}
             className="mt-5 flex items-center justify-center gap-2 bg-[#a17d43] px-5 py-4 text-xs tracking-[0.12em] text-white transition hover:bg-[#806132]"
           >
-            RESERVAR ESTADÍA
+            {reservation.label}
             <span aria-hidden="true">↗</span>
           </Link>
         </div>
